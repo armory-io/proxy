@@ -1,0 +1,23 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: spin-proxy-setup
+rules:
+  # basic
+  - apiGroups: [""]
+    resources: ["namespace"]
+    verbs: ["get"]
+  # for updating existing spin-services
+  - apiGroups: ["apps"]
+    resources: ["deployments/scale"]
+    verbs: ["patch"]
+  - apiGroups: [""]
+    resources: ["pods", "pods/portforward"]
+    verbs: ["get", "list", "create"]
+  # for spin-proxies resources
+  - apiGroups: ["apps"]
+    resources: ["deployments"]
+    verbs: ["patch", "create"]
+  - apiGroups: [""]
+    resources: ["services"]
+    verbs: ["get", "list", "patch", "create"]
